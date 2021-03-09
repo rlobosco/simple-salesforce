@@ -348,3 +348,14 @@ class SFBulkType:
                                  headers=self.headers)
 
             yield result.text
+
+    def bulk_v2_delete_job(self, jobId):
+        url = "{}{}{}{}".format(self.bulk_url, "jobs/", "query/",
+                                  jobId)
+
+        result = call_salesforce(url=url, method="DELETE", session=self.session,
+                               headers=self.headers)
+
+        if result.status_code == 204:
+            print("Job deleted")
+            return True
