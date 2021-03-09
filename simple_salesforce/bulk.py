@@ -359,3 +359,19 @@ class SFBulkType:
         if result.status_code == 204:
             print("Job deleted")
             return True
+
+    def _bulk_v2_operation(self, query, chunk_size, wait=5):
+        job = self._bulk_v2_create_job(query)
+
+        job_status = self._bulk_v2_get_job_status(job['id'])['state']
+
+        while job_status not in ['JobComplete']:
+            sleep(wait)
+            job_status = self._bulk_v2_get_job_status(job['id'])['state']
+
+        job_result = self._bulk_v2_get_job_results(job['id'], chunk_size)
+
+        return job_result
+
+    def bulk_v2_query(self, query, chunk_size=10000):
+        return self._bulk_v2_operation(query, chunk_size)
