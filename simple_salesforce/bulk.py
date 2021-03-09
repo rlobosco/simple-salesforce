@@ -308,3 +308,17 @@ class SFBulkType:
         if lazy_operation:
             return results
         return list_from_generator(results)
+
+# ----------------------------------- V2  -----------------------------------
+
+
+    def _bulk_v2_create_job(self, query):
+        url = "{}{}{}".format(self.bulk_url, "jobs/", "query")
+        self.headers['Accept'] = "application/json"
+
+        payload = json.dumps({"operation": "query", "query": query})
+
+        result = call_salesforce(url=url, method="POST", session=self.session,
+                               headers=self.headers, data=payload)
+
+        return result.json(object_pairs_hook=OrderedDict)
