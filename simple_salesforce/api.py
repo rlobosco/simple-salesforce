@@ -1,7 +1,7 @@
 """Core classes and exceptions for Simple-Salesforce"""
 
 # has to be defined prior to login import
-DEFAULT_API_VERSION = '42.0'
+DEFAULT_API_VERSION = '47.0'
 
 import json
 import logging
@@ -186,7 +186,7 @@ class Salesforce:
                                  version=self.sf_version))
         self.apex_url = ('https://{instance}/services/apexrest/'
                          .format(instance=self.sf_instance))
-        self.bulk_url = ('https://{instance}/services/async/{version}/'
+        self.bulk_url = ('https://{instance}/services/data/{version}/'
                          .format(instance=self.sf_instance,
                                  version=self.sf_version))
         self.metadata_url = ('https://{instance}/services/Soap/m/{version}/'
