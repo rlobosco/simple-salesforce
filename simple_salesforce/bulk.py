@@ -322,3 +322,11 @@ class SFBulkType:
                                headers=self.headers, data=payload)
 
         return result.json(object_pairs_hook=OrderedDict)
+
+    def _bulk_v2_get_job_status(self, jobId):
+        url = "{}{}{}{}".format(self.bulk_url, "jobs/", "query/", jobId)
+
+        result = call_salesforce(url=url, method="GET", session=self.session,
+                               headers=self.headers)
+
+        return result.json(object_pairs_hook=OrderedDict)
