@@ -41,6 +41,7 @@ class SFBulkHandler:
         # Define these headers separate from Salesforce class,
         # as bulk uses a slightly different format
         self.headers = {
+            'Authorization': f"Bearer {self.session_id}",
             'Content-Type': 'application/json',
             'X-SFDC-Session': self.session_id,
             'X-PrettyPrint': '1'
