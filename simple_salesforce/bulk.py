@@ -330,3 +330,21 @@ class SFBulkType:
                                headers=self.headers)
 
         return result.json(object_pairs_hook=OrderedDict)
+
+    def _bulk_v2_get_job_results(self, jobId, chunk_size):
+        url = "{}{}{}{}{}{}{}".format(self.bulk_url, "jobs/", "query/",
+                                      jobId, "/results", "?maxRecords=",
+                                      chunk_size)
+
+        result = call_salesforce(url=url, method="GET", session=self.session,
+                                 headers=self.headers)
+
+        yield result.text
+
+        while result.headers["Sforce-Locator"] != "null":
+            url = f"{url}&locator={result.headers['Sforce-Locator']}"
+
+            result = call_salesforce(url=url, method="GET", session=self.session,
+                                 headers=self.headers)
+
+            yield result.text
