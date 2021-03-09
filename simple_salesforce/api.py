@@ -186,7 +186,7 @@ class Salesforce:
                                  version=self.sf_version))
         self.apex_url = ('https://{instance}/services/apexrest/'
                          .format(instance=self.sf_instance))
-        self.bulk_url = ('https://{instance}/services/data/{version}/'
+        self.bulk_url = ('https://{instance}/services/data/v{version}/'
                          .format(instance=self.sf_instance,
                                  version=self.sf_version))
         self.metadata_url = ('https://{instance}/services/Soap/m/{version}/'
