@@ -19,7 +19,8 @@ class SFBulkHandler:
     to allow the above syntax
     """
 
-    def __init__(self, session_id, bulk_url, proxies=None, session=None):
+    def __init__(self, session_id, bulk_url, bulk_v2_url,
+                 proxies=None, session=None):
         """Initialize the instance with the given parameters.
 
         Arguments:
@@ -34,6 +35,7 @@ class SFBulkHandler:
         self.session_id = session_id
         self.session = session or requests.Session()
         self.bulk_url = bulk_url
+        self.bulk_v2_url = bulk_v2_url
         # don't wipe out original proxies with None
         if not session and proxies is not None:
             self.session.proxies = proxies
@@ -49,13 +51,14 @@ class SFBulkHandler:
 
     def __getattr__(self, name):
         return SFBulkType(object_name=name, bulk_url=self.bulk_url,
-                          headers=self.headers, session=self.session)
+                          bulk_v2_url=self.bulk_v2_url, headers=self.headers,
+                          session=self.session)
 
 
 class SFBulkType:
     """ Interface to Bulk/Async API functions"""
 
-    def __init__(self, object_name, bulk_url, headers, session):
+    def __init__(self, object_name, bulk_url, bulk_v2_url, headers, session):
         """Initialize the instance with the given parameters.
 
         Arguments:
@@ -70,6 +73,7 @@ class SFBulkType:
         """
         self.object_name = object_name
         self.bulk_url = bulk_url
+        self.bulk_v2_url = bulk_v2_url
         self.session = session
         self.headers = headers
 
