@@ -317,7 +317,7 @@ class SFBulkType:
 
 
     def _bulk_v2_create_job(self, query):
-        url = "{}{}{}".format(self.bulk_url, "jobs/", "query")
+        url = "{}{}{}".format(self.bulk_v2_url, "jobs/", "query")
         self.headers['Accept'] = "application/json"
 
         payload = json.dumps({"operation": "query", "query": query})
@@ -328,7 +328,7 @@ class SFBulkType:
         return result.json(object_pairs_hook=OrderedDict)
 
     def _bulk_v2_get_job_status(self, jobId):
-        url = "{}{}{}{}".format(self.bulk_url, "jobs/", "query/", jobId)
+        url = "{}{}{}{}".format(self.bulk_v2_url, "jobs/", "query/", jobId)
 
         result = call_salesforce(url=url, method="GET", session=self.session,
                                headers=self.headers)
@@ -336,7 +336,7 @@ class SFBulkType:
         return result.json(object_pairs_hook=OrderedDict)
 
     def _bulk_v2_get_job_results(self, jobId, chunk_size):
-        url = "{}{}{}{}{}{}{}".format(self.bulk_url, "jobs/", "query/",
+        url = "{}{}{}{}{}{}{}".format(self.bulk_v2_url, "jobs/", "query/",
                                       jobId, "/results", "?maxRecords=",
                                       chunk_size)
 
@@ -355,7 +355,7 @@ class SFBulkType:
             yield result.text
 
     def bulk_v2_delete_job(self, jobId):
-        url = "{}{}{}{}".format(self.bulk_url, "jobs/", "query/",
+        url = "{}{}{}{}".format(self.bulk_v2_url, "jobs/", "query/",
                                   jobId)
 
         result = call_salesforce(url=url, method="DELETE", session=self.session,
