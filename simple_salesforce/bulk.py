@@ -342,9 +342,9 @@ class SFBulkType:
         yield result.text
 
         while result.headers["Sforce-Locator"] != "null":
-            url = f"{url}&locator={result.headers['Sforce-Locator']}"
+            next_page = url+f"&locator={result.headers['Sforce-Locator']}"
 
-            result = call_salesforce(url=url, method="GET", session=self.session,
+            result = call_salesforce(url=next_page, method="GET", session=self.session,
                                  headers=self.headers)
 
             yield result.text
